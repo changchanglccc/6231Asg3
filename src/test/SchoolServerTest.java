@@ -7,7 +7,7 @@ public class SchoolServerTest {
 
     public static void main(String[] args) {
         SchoolServerImplService CSIS = new SchoolServerImplService();
-        SchoolServer record = CSIS.getClinicServerImplPort();
+        SchoolServer record = CSIS.getSchoolServerImplPort();
         System.out.println(record.getRecordCounts("MTL2000"));
     }
 

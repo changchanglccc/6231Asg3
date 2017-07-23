@@ -16,40 +16,40 @@ import javax.xml.ws.WebServiceFeature;
  * JAX-WS RI 2.2.9-b130926.1035
  * Generated source version: 2.2
  */
-@WebServiceClient(name = "SchoolServerImplService", targetNamespace = "http://server/", wsdlLocation = "http://localhost:4010/clinic?wsdl")
+@WebServiceClient(name = "SchoolServerImplService", targetNamespace = "http://server/", wsdlLocation = "http://localhost:4010/school?wsdl")
 public class SchoolServerImplService
         extends Service {
 
-    private final static URL CLINICSERVERIMPLSERVICE_WSDL_LOCATION;
-    private final static WebServiceException CLINICSERVERIMPLSERVICE_EXCEPTION;
-    private final static QName CLINICSERVERIMPLSERVICE_QNAME = new QName("http://server/", "SchoolServerImplService");
+    private final static URL SCHOOLSERVERIMPLSERVICE_WSDL_LOCATION;
+    private final static WebServiceException SCHOOLSERVERIMPLSERVICE_EXCEPTION;
+    private final static QName SCHOOLSERVERIMPLSERVICE_QNAME = new QName("http://server/", "SchoolServerImplService");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:4010/clinic?wsdl");
+            url = new URL("http://localhost:4010/school?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
-        CLINICSERVERIMPLSERVICE_WSDL_LOCATION = url;
-        CLINICSERVERIMPLSERVICE_EXCEPTION = e;
+        SCHOOLSERVERIMPLSERVICE_WSDL_LOCATION = url;
+        SCHOOLSERVERIMPLSERVICE_EXCEPTION = e;
     }
 
     public SchoolServerImplService() {
-        super(__getWsdlLocation(), CLINICSERVERIMPLSERVICE_QNAME);
+        super(__getWsdlLocation(), SCHOOLSERVERIMPLSERVICE_QNAME);
     }
 
     public SchoolServerImplService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), CLINICSERVERIMPLSERVICE_QNAME, features);
+        super(__getWsdlLocation(), SCHOOLSERVERIMPLSERVICE_QNAME, features);
     }
 
     public SchoolServerImplService(URL wsdlLocation) {
-        super(wsdlLocation, CLINICSERVERIMPLSERVICE_QNAME);
+        super(wsdlLocation, SCHOOLSERVERIMPLSERVICE_QNAME);
     }
 
     public SchoolServerImplService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, CLINICSERVERIMPLSERVICE_QNAME, features);
+        super(wsdlLocation, SCHOOLSERVERIMPLSERVICE_QNAME, features);
     }
 
     public SchoolServerImplService(URL wsdlLocation, QName serviceName) {
@@ -63,25 +63,25 @@ public class SchoolServerImplService
     /**
      * @return returns SchoolServer
      */
-    @WebEndpoint(name = "ClinicServerImplPort")
-    public SchoolServer getClinicServerImplPort() {
-        return super.getPort(new QName("http://server/", "ClinicServerImplPort"), SchoolServer.class);
+    @WebEndpoint(name = "SchoolServerImplPort")
+    public SchoolServer getSchoolServerImplPort() {
+        return super.getPort(new QName("http://server/", "SchoolServerImplPort"), SchoolServer.class);
     }
 
     /**
      * @param features A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return returns SchoolServer
      */
-    @WebEndpoint(name = "ClinicServerImplPort")
-    public SchoolServer getClinicServerImplPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://server/", "ClinicServerImplPort"), SchoolServer.class, features);
+    @WebEndpoint(name = "SchoolServerImplPort")
+    public SchoolServer getSchoolServerImplPort(WebServiceFeature... features) {
+        return super.getPort(new QName("http://server/", "SchoolServerImplPort"), SchoolServer.class, features);
     }
 
     private static URL __getWsdlLocation() {
-        if (CLINICSERVERIMPLSERVICE_EXCEPTION != null) {
-            throw CLINICSERVERIMPLSERVICE_EXCEPTION;
+        if (SCHOOLSERVERIMPLSERVICE_EXCEPTION != null) {
+            throw SCHOOLSERVERIMPLSERVICE_EXCEPTION;
         }
-        return CLINICSERVERIMPLSERVICE_WSDL_LOCATION;
+        return SCHOOLSERVERIMPLSERVICE_WSDL_LOCATION;
     }
 
 }

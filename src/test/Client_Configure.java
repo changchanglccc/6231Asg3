@@ -10,16 +10,15 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import clientDDO.*;
 
 public class Client_Configure {
 
     String managerID;
-    String clinicServer;
+    String schoolServer;
 
-    clientMTL.SchoolServer ClinicMTL;
-    clientLVL.SchoolServer ClinicLVL;
-    SchoolServer ClinicDDO;
+    clientMTL.SchoolServer SchoolMTL;
+    clientLVL.SchoolServer SchoolLVL;
+    clientDDO.SchoolServer SchoolDDO;
 
     /**
      * LOGing is done here
@@ -39,7 +38,7 @@ public class Client_Configure {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (IOException e) {
-            System.out.println("COULD NOT LOG!!");
+            System.out.println("CAN NOT LOG!!");
         }
     }
 
@@ -47,33 +46,33 @@ public class Client_Configure {
         String pattern = "^(MTL|LVL|DDO)(\\d{5})$";
         Pattern re = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
         Matcher matcher = re.matcher(managerID);
-        if (matcher.find()) {
+        if (!matcher.find()) {
             throw new RuntimeException("Bad Manager ID");
         }
         this.managerID = managerID;
-        this.clinicServer = managerID.substring(0, 3);
+        this.schoolServer = managerID.substring(0, 3);
         logFile(managerID, "Manager - " + managerID + "Log In DSMS system.");
     }
 
 
     public void connect() {
         try {
-            // ghetto hardcode the parameters
+            // let's hardcode the parameters
 
-            switch (this.clinicServer) {
+            switch (this.schoolServer) {
                 case "MTL":
                     clientMTL.SchoolServerImplService CSIServiceMTL = new clientMTL.SchoolServerImplService();
-                    ClinicMTL = CSIServiceMTL.getClinicServerImplPort();
+                    SchoolMTL = CSIServiceMTL.getSchoolServerImplPort();
                     break;
 
                 case "LVL":
                     clientLVL.SchoolServerImplService CSIServiceLVL = new clientLVL.SchoolServerImplService();
-                    ClinicLVL = CSIServiceLVL.getClinicServerImplPort();
+                    SchoolLVL = CSIServiceLVL.getSchoolServerImplPort();
                     break;
 
                 case "DDO":
-                    SchoolServerImplService CSIServiceDDO = new SchoolServerImplService();
-                    ClinicDDO = CSIServiceDDO.getClinicServerImplPort();
+                    clientDDO.SchoolServerImplService CSIServiceDDO = new clientDDO.SchoolServerImplService();
+                    SchoolDDO = CSIServiceDDO.getSchoolServerImplPort();
                     break;
             }
             logFile(managerID, "Connected!");
@@ -84,49 +83,49 @@ public class Client_Configure {
     }
 
 
-    public String createDRecord(String managerID, String firstName, String lastName, String address, String phone,
+    public String createTRecord(String managerID, String firstName, String lastName, String address, String phone,
                                 String specialization, String location) {
 
-        logFile(managerID, "Manager choose to create Doctor Record !" + "\n");
+        logFile(managerID, "Manager choose to create Teacher Record !" + "\n");
         String result = null;
 
-        switch (this.clinicServer) {
+        switch (this.schoolServer) {
             case "MTL":
-                result = ClinicMTL.createDRecord(managerID, firstName, lastName, address, phone, specialization, location);
+                result = SchoolMTL.createTRecord(managerID, firstName, lastName, address, phone, specialization, location);
                 break;
 
             case "LVL":
-                result = ClinicLVL.createDRecord(managerID, firstName, lastName, address, phone, specialization, location);
+                result = SchoolLVL.createTRecord(managerID, firstName, lastName, address, phone, specialization, location);
                 break;
 
             case "DDO":
-                result = ClinicDDO.createDRecord(managerID, firstName, lastName, address, phone, specialization, location);
+                result = SchoolDDO.createTRecord(managerID, firstName, lastName, address, phone, specialization, location);
                 break;
         }
 
-        logFile(managerID, "Manager Create Doctor Record Succeed!" + "\n" + result);
+        logFile(managerID, "Manager Create Teacher Record Succeed!" + "\n" + result);
         return result;
     }
 
-    public String createNRecord(String managerID, String firstName, String lastName, String designation, String status,
+    public String createSRecord(String managerID, String firstName, String lastName, String courseRegistered, String status,
                                 String statusDate) {
 
-        logFile(managerID, "Manager choose to create Nurse Record !" + "\n");
+        logFile(managerID, "Manager choose to create Student Record !" + "\n");
         String result = null;
-        switch (this.clinicServer) {
+        switch (this.schoolServer) {
             case "MTL":
-                result = ClinicMTL.createNRecord(managerID, firstName, lastName, designation, status, statusDate);
+                result = SchoolMTL.createSRecord(managerID, firstName, lastName, courseRegistered, status, statusDate);
                 break;
 
             case "LVL":
-                result = ClinicLVL.createNRecord(managerID, firstName, lastName, designation, status, statusDate);
+                result = SchoolLVL.createSRecord(managerID, firstName, lastName, courseRegistered, status, statusDate);
                 break;
 
             case "DDO":
-                result = ClinicDDO.createNRecord(managerID, firstName, lastName, designation, status, statusDate);
+                result = SchoolDDO.createSRecord(managerID, firstName, lastName, courseRegistered, status, statusDate);
                 break;
         }
-        logFile(managerID, "Manager Create Nurse Record Succeed!" + "\n" + result);
+        logFile(managerID, "Manager Create Student Record Succeed!" + "\n" + result);
         return result;
     }
 
@@ -134,17 +133,17 @@ public class Client_Configure {
 
         logFile(managerID, "Manager choose to get Record counts !" + "\n");
         String result = null;
-        switch (this.clinicServer) {
+        switch (this.schoolServer) {
             case "MTL":
-                result = ClinicMTL.getRecordCounts(managerID);
+                result = SchoolMTL.getRecordCounts(managerID);
                 break;
 
             case "LVL":
-                result = ClinicLVL.getRecordCounts(managerID);
+                result = SchoolLVL.getRecordCounts(managerID);
                 break;
 
             case "DDO":
-                result = ClinicDDO.getRecordCounts(managerID);
+                result = SchoolDDO.getRecordCounts(managerID);
                 break;
         }
         logFile(managerID, "The Record counts --" + "\n" + result);
@@ -155,37 +154,37 @@ public class Client_Configure {
 
         logFile(managerID, "Manager choose to edit Record !" + "\n");
         String result = null;
-        switch (this.clinicServer) {
+        switch (this.schoolServer) {
             case "MTL":
-                result = ClinicMTL.editRecord(managerID, recordID, fieldName, newValue);
+                result = SchoolMTL.editRecord(managerID, recordID, fieldName, newValue);
                 break;
 
             case "LVL":
-                result = ClinicLVL.editRecord(managerID, recordID, fieldName, newValue);
+                result = SchoolLVL.editRecord(managerID, recordID, fieldName, newValue);
                 break;
 
             case "DDO":
-                result = ClinicDDO.editRecord(managerID, recordID, fieldName, newValue);
+                result = SchoolDDO.editRecord(managerID, recordID, fieldName, newValue);
                 break;
         }
         return result;
     }
 
-    public String transferRecord(String managerID, String recordID, String remoteClinicLocation) {
+    public String transferRecord(String managerID, String recordID, String remoteSchoolLocation) {
 
         logFile(managerID, "Manager choose to transfer Recrod !" + "\n");
         String result = null;
-        switch (this.clinicServer) {
+        switch (this.schoolServer) {
             case "MTL":
-                result = ClinicMTL.transferRecord(managerID, recordID, remoteClinicLocation);
+                result = SchoolMTL.transferRecord(managerID, recordID, remoteSchoolLocation);
                 break;
 
             case "LVL":
-                result = ClinicLVL.transferRecord(managerID, recordID, remoteClinicLocation);
+                result = SchoolLVL.transferRecord(managerID, recordID, remoteSchoolLocation);
                 break;
 
             case "DDO":
-                result = ClinicDDO.transferRecord(managerID, recordID, remoteClinicLocation);
+                result = SchoolDDO.transferRecord(managerID, recordID, remoteSchoolLocation);
                 break;
         }
         return result;

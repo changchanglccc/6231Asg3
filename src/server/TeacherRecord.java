@@ -9,17 +9,17 @@ public class TeacherRecord extends Record {
     @Override
     public String getRecordType() {
         // TODO Auto-generated method stub
-        return "DR";
+        return "TR";
     }
 
     public String toString() {
-        String dr = "First Name: " + getFirstName() + "\n"
+        String tr = "First Name: " + getFirstName() + "\n"
                 + "Last Name: " + getLastName() + "\n"
                 + "Address: " + getAddress() + "\n"
                 + "Phone: " + getPhone() + "\n"
                 + "specialization: " + getSpecialization() + "\n"
                 + "location: " + getLocation() + "\n";
-        return dr;
+        return tr;
     }
 
 }

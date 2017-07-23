@@ -7,16 +7,16 @@ import javax.jws.WebMethod;
 public interface SchoolServer {
 
     /**
-     * Operation createDRecord
+     * Operation createTRecord
      */
     @WebMethod
-    public String createDRecord(String managerID, String firstName, String lastName, String address, String phone, String specialization, String location);
+    public String createTRecord(String managerID, String firstName, String lastName, String address, String phone, String specialization, String location);
 
     /**
-     * Operation createNRecord
+     * Operation createSRecord
      */
     @WebMethod
-    public String createNRecord(String managerID, String firstName, String lastName, String designation, String status, String statusDate);
+    public String createSRecord(String managerID, String firstName, String lastName, String designation, String status, String statusDate);
 
     /**
      * Operation getRecordCounts

@@ -53,10 +53,10 @@ public interface SchoolServer {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "createNRecord", targetNamespace = "http://server/", className = "clientDDO.CreateSRecord")
-    @ResponseWrapper(localName = "createNRecordResponse", targetNamespace = "http://server/", className = "clientDDO.CreateSRecordResponse")
-    @Action(input = "http://server/SchoolServer/createNRecordRequest", output = "http://server/SchoolServer/createNRecordResponse")
-    public String createNRecord(
+    @RequestWrapper(localName = "createSRecord", targetNamespace = "http://server/", className = "clientDDO.CreateSRecord")
+    @ResponseWrapper(localName = "createSRecordResponse", targetNamespace = "http://server/", className = "clientDDO.CreateSRecordResponse")
+    @Action(input = "http://server/SchoolServer/createSRecordRequest", output = "http://server/SchoolServer/createSRecordResponse")
+    public String createSRecord(
             @WebParam(name = "arg0", targetNamespace = "")
                     String arg0,
             @WebParam(name = "arg1", targetNamespace = "")
@@ -95,10 +95,10 @@ public interface SchoolServer {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "createDRecord", targetNamespace = "http://server/", className = "clientDDO.CreateTRecord")
-    @ResponseWrapper(localName = "createDRecordResponse", targetNamespace = "http://server/", className = "clientDDO.CreateTRecordResponse")
-    @Action(input = "http://server/SchoolServer/createDRecordRequest", output = "http://server/SchoolServer/createDRecordResponse")
-    public String createDRecord(
+    @RequestWrapper(localName = "createTRecord", targetNamespace = "http://server/", className = "clientDDO.CreateTRecord")
+    @ResponseWrapper(localName = "createTRecordResponse", targetNamespace = "http://server/", className = "clientDDO.CreateTRecordResponse")
+    @Action(input = "http://server/SchoolServer/createTRecordRequest", output = "http://server/SchoolServer/createTRecordResponse")
+    public String createTRecord(
             @WebParam(name = "arg0", targetNamespace = "")
                     String arg0,
             @WebParam(name = "arg1", targetNamespace = "")

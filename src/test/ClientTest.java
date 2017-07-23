@@ -18,7 +18,6 @@ public class ClientTest {
         int response;
 
         do {
-
             System.out.print("\n **** Manager Menu for " + managerID + "**** \n"
                     + "1. Create Teacher Record\n"
                     + "2. Create Student Record\n"
@@ -41,20 +40,20 @@ public class ClientTest {
             switch (response) {
                 case 1:
                     try {
-                        System.out.println("Enter First name");
+                        System.out.println("Enter first name:");
                         String firstName = input.next();
-                        System.out.println("Enter Last name");
+                        System.out.println("Enter last name:");
                         String lastName = input.next();
-                        System.out.println("Enter Address");
+                        System.out.println("Enter address:");
                         String address = input.next();
-                        System.out.println("Enter Phone number");
+                        System.out.println("Enter phone number:");
                         String phone = input.next();
-                        System.out.println("Enter Specialization");
+                        System.out.println("Enter specialization:");
                         String specialization = input.next();
-                        System.out.println("Enter Location(mtl/lvl/ddo)");
+                        System.out.println("Enter Location(MTL/LVL/DDO):");
                         String location = input.next();
 
-                        result = client.createDRecord(managerID, firstName, lastName, address, phone, specialization, location);
+                        result = client.createTRecord(managerID, firstName, lastName, address, phone, specialization, location);
                         System.out.println(result);
                     } catch (Exception ex) {
                         System.out.println(ex.toString() + ex.getMessage());
@@ -62,18 +61,18 @@ public class ClientTest {
                     break;
                 case 2:
                     try {
-                        System.out.println("Enter First name");
+                        System.out.println("Enter first name:");
                         String firstName = input.next();
-                        System.out.println("Enter Last name");
+                        System.out.println("Enter last name:");
                         String lastName = input.next();
-                        System.out.println("Enter Designation");
+                        System.out.println("Enter course registered:");
                         String designation = input.next();
-                        System.out.println("Enter Status");
+                        System.out.println("Enter status:");
                         String status = input.next();
-                        System.out.println("Enter Status Date");
+                        System.out.println("Enter status date:");
                         String statusDate = input.next();
 
-                        result = client.createNRecord(managerID, firstName, lastName, designation, status, statusDate);
+                        result = client.createSRecord(managerID, firstName, lastName, designation, status, statusDate);
                         System.out.println(result);
                     } catch (Exception ex) {
                         System.out.println(ex.toString() + ex.getMessage());
@@ -98,9 +97,9 @@ public class ClientTest {
                     System.out.println("Enter Record ID:");
                     recordID = input.next();
                     System.out.println("Enter Remote Server:");
-                    String remoteClinicLocation = input.next();
+                    String remoteSchoolLocation = input.next();
 
-                    result = client.transferRecord(managerID, recordID, remoteClinicLocation);
+                    result = client.transferRecord(managerID, recordID, remoteSchoolLocation);
                     System.out.println(result);
                     break;
                 case 0:

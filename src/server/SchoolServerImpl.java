@@ -26,25 +26,24 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
 
 
     @Override
-    public String createDRecord(String managerID, String firstName, String lastName, String address, String phone,
+    public String createTRecord(String managerID, String firstName, String lastName, String address, String phone,
                                 String specialization, String location) {
-                                                /*records.getNextFreeId()*/
         TeacherRecord record = new TeacherRecord(records.getNextFreeId(), firstName, lastName, address, phone, specialization, location);
         String id = record.getId();
         records.addRecord(record);
-        logFile(this.name, " Create Doctor Record: " + id + "\n" + record.toString());
+        logFile(this.name, " Create Teacher Record: " + id + "\n" + record.toString());
         return id + "\n" + record.toString();
 
     }
 
     @Override
-    public String createNRecord(String managerID, String firstName, String lastName, String designation, String status,
+    public String createSRecord(String managerID, String firstName, String lastName, String designation, String status,
                                 String statusDate) {
 
-        StudentRecord record = new StudentRecord("NR300", firstName, lastName, designation, status, statusDate);
+        StudentRecord record = new StudentRecord(records.getNextFreeId(), firstName, lastName, designation, status, statusDate);
         String id = record.getId();
         records.addRecord(record);
-        logFile(this.name, " Create Nurse Record: " + id + "\n" + record.toString());
+        logFile(this.name, " Create Student Record: " + id + "\n" + record.toString());
         return id + "\n" + record.toString();
 
     }
@@ -53,14 +52,14 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
     public String getRecordCounts(String managerID) {
 
         String counts = "";
-        for (String clinicName : clinicServers) {
+        for (String schoolName : schoolServers) {
             try {
                 // only kind of request but send it anyways
                 String request = "action:recordCount";
 
                 DatagramSocket socket = new DatagramSocket();
                 InetAddress addr = InetAddress.getByName("localhost");
-                int port = PublishCS.portHash(clinicName);
+                int port = PublishCS.portHash(schoolName);
                 DatagramPacket packet = new DatagramPacket(request.getBytes(), request.length(), addr, port);
                 socket.send(packet);
                 byte[] buffer = new byte[1500];
@@ -74,9 +73,9 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
 
                 if (response.startsWith("recordCount:")) {
                     String count = response.substring(response.indexOf(":") + 1);
-                    counts += clinicName + " : " + count + ", ";
+                    counts += schoolName + " : " + count + ", ";
                 } else {
-                    counts += clinicName + " responded badly, ";
+                    counts += schoolName + " responded badly, ";
                 }
 
                 socket.close();
@@ -97,33 +96,33 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
     @Override
     public String editRecord(String managerID, String recordID, String fieldName, String newValue) {
 
-        if (recordID.contains("DR")) {
-            Record drecord = records.getRecord(recordID);
-            if (drecord != null) {
-                synchronized (drecord) {
+        if (recordID.contains("TR")) {
+            Record trecord = records.getRecord(recordID);
+            if (trecord != null) {
+                synchronized (trecord) {
                     if (fieldName.equalsIgnoreCase("address")) {
-                        drecord.setAddress(newValue);
+                        trecord.setAddress(newValue);
                     } else if (fieldName.equalsIgnoreCase("phone")) {
-                        drecord.setPhone(newValue);
+                        trecord.setPhone(newValue);
                     } else if (fieldName.equalsIgnoreCase("specialization")) {
-                        drecord.setSpecialization(newValue);
+                        trecord.setSpecialization(newValue);
                     } else if (fieldName.equalsIgnoreCase("location")) {
-                        drecord.setLocation(newValue);
+                        trecord.setLocation(newValue);
                     }
                 }
 
             }
-        } else if (recordID.contains("NR")) {
-            Record nrecord = records.getRecord(recordID);
-            if (nrecord != null) {
-                synchronized (nrecord) {
+        } else if (recordID.contains("SR")) {
+            Record srecord = records.getRecord(recordID);
+            if (srecord != null) {
+                synchronized (srecord) {
                     if (fieldName.equalsIgnoreCase("designation")) {
-                        nrecord.setDesignation(newValue);
+                        srecord.setDesignation(newValue);
                     } else if (fieldName.equalsIgnoreCase("status")) {
-                        nrecord.setStatus(newValue);
+                        srecord.setStatus(newValue);
                         ;
                     } else if (fieldName.equalsIgnoreCase("statusDate")) {
-                        nrecord.setStatusDate(newValue);
+                        srecord.setStatusDate(newValue);
                     }
                 }
             }
@@ -134,10 +133,10 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
     }
 
     @Override
-    public String transferRecord(String managerID, String recordID, String remoteClinicServerName) {
+    public String transferRecord(String managerID, String recordID, String remoteSchoolServerName) {
 
-        if (!Arrays.asList(clinicServers).contains(remoteClinicServerName)) {
-            //logFile(this.name, remoteClinicServerName + " server is not in list");
+        if (!Arrays.asList(schoolServers).contains(remoteSchoolServerName)) {
+            //logFile(this.name, remoteSchoolServerName + " server is not in list");
             return "_FAIL_";
         }
         try {
@@ -155,7 +154,7 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
 
             String requeststr = MapSerializer.stringify(request);
 
-            int port = PublishCS.portHash(remoteClinicServerName);
+            int port = PublishCS.portHash(remoteSchoolServerName);
 
             DatagramPacket packet = new DatagramPacket(requeststr.getBytes(), requeststr.length(), addr, port);
             socket.send(packet);
@@ -170,7 +169,7 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
 
             if ("success".equals(status)) {
                 records.removeRecord(record.getId(), record.getLastName());
-                logFile(this.name, " TransferRecord Success : the Record - " + recordID + "has been transferred to " + remoteClinicServerName);
+                logFile(this.name, " TransferRecord Success : the Record - " + recordID + "has been transferred to " + remoteSchoolServerName);
             } else {
                 logFile(this.name, " transferRecord <FAIL> ");
             }
@@ -178,7 +177,7 @@ public class SchoolServerImpl extends PublishCS implements SchoolServer {
             socket.close();
 
             if (response.containsKey("id")) {
-                return response.get("id") + " has been transferred to " + remoteClinicServerName; // return new id
+                return response.get("id") + " has been transferred to " + remoteSchoolServerName; // return new id
             }
             return "_FAIL_";
         } catch (Exception ex) {

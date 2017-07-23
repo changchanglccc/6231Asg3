@@ -18,7 +18,7 @@ import javax.xml.ws.Endpoint;
 
 public class PublishCS {
 
-    public final static String[] clinicServers = {"MTL", "LVL", "DDO"};
+    public final static String[] schoolServers = {"MTL", "LVL", "DDO"};
 
     public String name, managerID;
     public RecordContainer records;
@@ -31,27 +31,27 @@ public class PublishCS {
     public static void main(String[] args) {
 
         // Start a thread of each station
-        SchoolServerImpl clinicMTL = new SchoolServerImpl();
-        clinicMTL.setName("MTL");
-        SchoolServerImpl clinicLVL = new SchoolServerImpl();
-        clinicLVL.setName("LVL");
-        SchoolServerImpl clinicDDO = new SchoolServerImpl();
-        clinicDDO.setName("DDO");
-        Endpoint epMTL = Endpoint.publish("http://localhost:4010/clinic", clinicMTL);
-        System.out.println("epMTL is running: " + epMTL.isPublished());
-        Endpoint epLVL = Endpoint.publish("http://localhost:4020/clinic", clinicLVL);
-        System.out.println("epLVL is running: " + epLVL.isPublished());
-        Endpoint epDDO = Endpoint.publish("http://localhost:4030/clinic", clinicDDO);
-        System.out.println("epDDO is running: " + epDDO.isPublished());
-        //for (String clinicServer : clinicServers) {
+        SchoolServerImpl schoolMTL = new SchoolServerImpl();
+        schoolMTL.setName("MTL");
+        SchoolServerImpl schoolLVL = new SchoolServerImpl();
+        schoolLVL.setName("LVL");
+        SchoolServerImpl schoolDDO = new SchoolServerImpl();
+        schoolDDO.setName("DDO");
+        Endpoint epMTL = Endpoint.publish("http://localhost:4010/school", schoolMTL);
+        System.out.println("MTL Endpoint is running: " + epMTL.isPublished());
+        Endpoint epLVL = Endpoint.publish("http://localhost:4020/school", schoolLVL);
+        System.out.println("LVL Endpoint is running: " + epLVL.isPublished());
+        Endpoint epDDO = Endpoint.publish("http://localhost:4030/school", schoolDDO);
+        System.out.println("DDO Endpoint is running: " + epDDO.isPublished());
+        //for (String schoolServer : schoolServers) {
 
-        clinicMTL.startServerThreads();
-        clinicLVL.startServerThreads();
-        clinicDDO.startServerThreads();
+        schoolMTL.startServerThreads();
+        schoolLVL.startServerThreads();
+        schoolDDO.startServerThreads();
 
         // }
 
-//		Endpoint endPoint = Endpoint.publish("http://localhost:7777/clinic", new SchoolServerImpl());
+//		Endpoint endPoint = Endpoint.publish("http://localhost:7777/school", new SchoolServerImpl());
 //		System.out.println(endPoint.isPublished());
     }
 
@@ -168,7 +168,7 @@ public class PublishCS {
     /**
      * Given a serverName, determine which port its UDP server is on
      *
-     * @param string clinicName
+     * @param string schoolName
      * @return port
      */
     public static int portHash(String string) {

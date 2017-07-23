@@ -3,7 +3,7 @@ package server;
 public abstract class Record {
 
     protected String id;
-    protected String firstName, lastName, address, phone, specialization, location, designation, status, statusDate;
+    protected String firstName, lastName, address, phone, specialization, location, courseRegistered, status, statusDate;
 
     protected abstract String getRecordType();
 
@@ -17,11 +17,11 @@ public abstract class Record {
         this.location = location;
     }
 
-    public Record(String id, String firstName, String lastName, String designation, String status, String statusDate) {
+    public Record(String id, String firstName, String lastName, String courseRegistered, String status, String statusDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.designation = designation;
+        this.courseRegistered = courseRegistered;
         this.status = status;
         this.statusDate = statusDate;
     }
@@ -128,21 +128,21 @@ public abstract class Record {
     }
 
     /**
-     * this is a method of get designation
+     * this is a method of get courseRegistered
      *
      * @return
      */
-    public String getDesignation() {
-        return designation;
+    public String getCourseRegistered() {
+        return courseRegistered;
     }
 
     /**
-     * this is a method of set designation
+     * this is a method of set courseRegistered
      *
-     * @param designation
+     * @param courseRegistered
      */
-    public void setDesignation(String designation) {
-        this.designation = designation;
+    public void setDesignation(String courseRegistered) {
+        this.courseRegistered = courseRegistered;
     }
 
     /**

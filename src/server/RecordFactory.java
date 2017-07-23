@@ -15,7 +15,7 @@ public class RecordFactory {
 
         String idnum = Long.toString(Long.parseLong(recordID.replace(type, ""), 10));
 
-        if ("DR".equals(type)) {
+        if ("TR".equals(type)) {
             String address = map.get("ad");
             String phone = map.get("ph");
             String specialization = map.get("sp");
@@ -23,7 +23,7 @@ public class RecordFactory {
             return new TeacherRecord(idnum, firstName, lastName, address, phone, specialization, location);
 
         }
-        if ("MR".equals(type)) {
+        if ("SR".equals(type)) {
 
             String designation = map.get("de");
             String status = map.get("st");
@@ -42,20 +42,20 @@ public class RecordFactory {
         map.put("ty", record.getRecordType());
 
         try {
-            TeacherRecord dr = (TeacherRecord) record;
-            map.put("ad", dr.getAddress());
-            map.put("ph", dr.getPhone());
-            map.put("sp", dr.getSpecialization());
-            map.put("lo", dr.getLocation());
+            TeacherRecord tr = (TeacherRecord) record;
+            map.put("ad", tr.getAddress());
+            map.put("ph", tr.getPhone());
+            map.put("sp", tr.getSpecialization());
+            map.put("lo", tr.getLocation());
 
         } catch (ClassCastException ex) {
         }
 
         try {
-            StudentRecord nr = (StudentRecord) record;
-            map.put("de", nr.getDesignation());
-            map.put("st", nr.getStatus());
-            map.put("sd", nr.getStatusDate());
+            StudentRecord sr = (StudentRecord) record;
+            map.put("de", sr.getCourseRegistered());
+            map.put("st", sr.getStatus());
+            map.put("sd", sr.getStatusDate());
         } catch (ClassCastException ex) {
         }
 
